@@ -2,21 +2,15 @@
   "name": "hello",
   "version": "0.0.0",
   "description": "",
-  "main": "p3-express.js",
+  "main": "hello.js",
   "dependencies": {
     "express": "*",
     "ejs": "*"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node p3-express.js"
+    "test": "node p3-express.js"
   },
-
-  "keywords": [
-    "node",
-    "heroku",
-    "express"
-  ],
   "author": "",
   "license": "ISC"
 }
