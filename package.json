@@ -1,36 +1,22 @@
 {
-  "name": "EstudiarRutasExpress",
-  "version": "1.0.0",
+  "name": "hello",
+  "version": "0.0.0",
   "description": "",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ULL-ESIT-PL-1617/estudiar-las-rutas-en-expressjs-daniel-alejandro-aduanich.git"
-  },
-  "devDependencies": {
-    "async": "^1.4.0",
-    "fs-extra": "^2.0.0",
-    "gh-pages": "^0.12.0",
-    "gitbook": "^2.6.7",
-    "gitbook-cli": "^2.3.0",
-    "gulp-connect": "^5.0.0",
-    "shelljs": "^0.7.6"
-  },
+  "main": "p3-express.js",
   "dependencies": {
-    "gitbook": "^2.6.7",
-    "gulp": "^3.9.1",
-    "shelljs": "^0.7.6"
+    "express": "*",
+    "ejs": "*"
   },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node p3-express.js"
+  },
+
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
   "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ULL-ESIT-PL-1617/estudiar-las-rutas-en-expressjs-daniel-alejandro-aduanich/issues"
-  },
-  "homepage": "https://github.com/ULL-ESIT-PL-1617/estudiar-las-rutas-en-expressjs-daniel-alejandro-aduanich#readme"
+  "license": "ISC"
 }
