@@ -1,6 +1,6 @@
 # Índice
 
-* [Direccionamiento Básico](BasicR/README.md)
-* [Guía de Direccionamiento](RoutingG/README.md)
-* [Middlewares](UsingMDW/README.md)
-* [Documentación API Router (Express)](RAPID/README.md)
+* [Direccionamiento Básico](docs/BasicR/README.md)
+* [Guía de Direccionamiento](docs/RoutingG/README.md)
+* [Middlewares](docs/UsingMDW/README.md)
+* [Documentación API Router (Express)](docs/RAPID/README.md)
