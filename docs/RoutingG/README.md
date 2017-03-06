@@ -199,7 +199,7 @@ Los métodos en el objeto de respuesta (res) de la tabla siguiente pueden enviar
 __Método__       | __Descripción__
 -----------------|-----------------
 res.download()   | Solicita un archivo para descargarlo
-res.end()	     |Finaliza el proceso de respuesta.
+res.end()	       |Finaliza el proceso de respuesta.
 res.json()	     |Envía una respuesta JSON.
 res.jsonp()	     |Envía una respuesta JSON con soporte JSONP.
 res.redirect()   |Redirecciona una solicitud.
