@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Direccionamiento Básico | Links al deploy</title>
+        <title>Middleware de nivel de aplicación | Links al deploy</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.5.2">
@@ -37,10 +37,10 @@
         
     
     
-    <link rel="next" href="../../docs/RoutingG/index.html" />
+    <link rel="next" href="../../docs/UsingMDW/MiddlewareDi.html" />
     
     
-    <link rel="prev" href="../../index.html" />
+    <link rel="prev" href="../../docs/UsingMDW/index.html" />
     
 
         
@@ -48,7 +48,7 @@
     <body>
         
         
-    <div class="book" data-level="1" data-chapter-title="Direccionamiento Básico" data-filepath="docs/BasicR/README.md" data-basepath="../.." data-revision="Tue Mar 07 2017 00:48:29 GMT+0000 (WET)">
+    <div class="book" data-level="3.1" data-chapter-title="Middleware de nivel de aplicación" data-filepath="docs/UsingMDW/MiddlewareAp.md" data-basepath="../.." data-revision="Tue Mar 07 2017 00:48:29 GMT+0000 (WET)">
     
 
 <div class="book-summary">
@@ -76,7 +76,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1" data-path="docs/BasicR/index.html">
+        <li class="chapter " data-level="1" data-path="docs/BasicR/index.html">
             
                 
                     <a href="../../docs/BasicR/index.html">
@@ -122,7 +122,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="3.1" data-path="docs/UsingMDW/MiddlewareAp.html">
+        <li class="chapter active" data-level="3.1" data-path="docs/UsingMDW/MiddlewareAp.html">
             
                 
                     <a href="../../docs/UsingMDW/MiddlewareAp.html">
@@ -250,47 +250,60 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="direccionamiento-b&#xE1;sico">Direccionamiento B&#xE1;sico</h1>
-<h2 id="introducci&#xF3;n">Introducci&#xF3;n</h2>
-<p>El <strong>direccionamiento</strong> hace referencia a la determinaci&#xF3;n de c&#xF3;mo responde una aplicaci&#xF3;n a una solicitud de cliente en un determinado punto final, que es un URI (o una v&#xED;a de acceso) y un m&#xE9;todo de solicitud HTTP espec&#xED;fico (GET, POST, etc.).</p>
-<p>Cada ruta puede tener una o varias funciones de manejador, que se excluyen cuando se correlaciona la ruta.</p>
-<p>La definici&#xF3;n de ruta tiene la siguiente estructura:</p>
-<pre><code class="lang-bash">    app.METHOD(PATH, HANDLER)
-</code></pre>
-<p>Donde:</p>
-<ul>
-<li>app es una instancia de express.</li>
-<li>METHOD es un m&#xE9;todo de solicitud HTTP.</li>
-<li>PATH es una v&#xED;a de acceso en el servidor.</li>
-<li>HANDLER es la funci&#xF3;n que se ejecuta cuando se correlaciona la ruta.</li>
-</ul>
-<h3 id="el-siguiente-ejemplo-ilustra-la-definici&#xF3;n-de-rutas-simples">El siguiente ejemplo ilustra la definici&#xF3;n de rutas simples.</h3>
-<ol>
-<li>Responda con Hello World! en la p&#xE1;gina inicial:</li>
-</ol>
-<pre><code class="lang-bash">app.get(<span class="hljs-string">&apos;/&apos;</span>, <span class="hljs-keyword">function</span> (req, res) {
-  res.send(<span class="hljs-string">&apos;Hello World!&apos;</span>);
+                        <h2 id="middleware-de-nivel-de-aplicaci&#xF3;n">Middleware de nivel de aplicaci&#xF3;n</h2>
+<p>Enlace el middleware de nivel de aplicaci&#xF3;n a una instancia del objeto de aplicaci&#xF3;n utilizando las funciones app.use() y app.METHOD(), donde METHOD es el m&#xE9;todo HTTP de la solicitud que maneja la funci&#xF3;n de middleware (por ejemplo, GET, PUT o POST) en min&#xFA;sculas.</p>
+<p>Este ejemplo muestra una funci&#xF3;n de middleware sin ninguna v&#xED;a de acceso de montaje. La funci&#xF3;n se ejecuta cada vez que la aplicaci&#xF3;n recibe una solicitud.</p>
+<pre><code class="lang-bash">var app = express();
+
+app.use(<span class="hljs-keyword">function</span> (req, res, next) {
+  console.log(<span class="hljs-string">&apos;Time:&apos;</span>, Date.now());
+  next();
 });
 </code></pre>
-<ol>
-<li>Responda a la solicitud POST en la ruta ra&#xED;z (/), la p&#xE1;gina de inicio de la aplicaci&#xF3;n:</li>
-</ol>
-<pre><code class="lang-bash">app.post(<span class="hljs-string">&apos;/&apos;</span>, <span class="hljs-keyword">function</span> (req, res) {
-  res.send(<span class="hljs-string">&apos;Got a POST request&apos;</span>);
+<p>Este ejemplo muestra una funci&#xF3;n de middleware montada en la v&#xED;a de acceso /user/:id. La funci&#xF3;n se ejecuta para cualquier tipo de solicitud HTTP en la v&#xED;a de acceso /user/:id.</p>
+<pre><code class="lang-bash">app.use(<span class="hljs-string">&apos;/user/:id&apos;</span>, <span class="hljs-keyword">function</span> (req, res, next) {
+  console.log(<span class="hljs-string">&apos;Request Type:&apos;</span>, req.method);
+  next();
 });
 </code></pre>
-<ol>
-<li>Responda a una solicitud PUT en la ruta /user:</li>
-</ol>
-<pre><code class="lang-bash">app.put(<span class="hljs-string">&apos;/user&apos;</span>, <span class="hljs-keyword">function</span> (req, res) {
-  res.send(<span class="hljs-string">&apos;Got a PUT request at /user&apos;</span>);
+<p>Este ejemplo muestra una ruta y su funci&#xF3;n de manejador (sistema de middleware). La funci&#xF3;n maneja las solicitudes GET a la v&#xED;a de acceso /user/:id.</p>
+<pre><code class="lang-bash">app.get(<span class="hljs-string">&apos;/user/:id&apos;</span>, <span class="hljs-keyword">function</span> (req, res, next) {
+  res.send(<span class="hljs-string">&apos;USER&apos;</span>);
 });
 </code></pre>
-<ol>
-<li>Responda a una solicitud DELETE en la ruta /user:</li>
-</ol>
-<pre><code class="lang-bash">app.delete(<span class="hljs-string">&apos;/user&apos;</span>, <span class="hljs-keyword">function</span> (req, res) {
-  res.send(<span class="hljs-string">&apos;Got a DELETE request at /user&apos;</span>);
+<p>A continuaci&#xF3;n, se muestra un ejemplo de carga de una serie de funciones de middleware en un punto de montaje, con una v&#xED;a de acceso de montaje. Ilustra una subpila de middleware que imprime informaci&#xF3;n de solicitud para cualquier tipo de solicitud HTTP en la v&#xED;a de acceso /user/:id.</p>
+<pre><code class="lang-bash">app.use(<span class="hljs-string">&apos;/user/:id&apos;</span>, <span class="hljs-keyword">function</span>(req, res, next) {
+  console.log(<span class="hljs-string">&apos;Request URL:&apos;</span>, req.originalUrl);
+  next();
+}, <span class="hljs-keyword">function</span> (req, res, next) {
+  console.log(<span class="hljs-string">&apos;Request Type:&apos;</span>, req.method);
+  next();
+});
+</code></pre>
+<p>Los manejadores de rutas permiten definir varias rutas para una v&#xED;a de acceso. El ejemplo siguiente define dos rutas para las solicitudes GET a la v&#xED;a de acceso /user/:id. La segunda ruta no dar&#xE1; ning&#xFA;n problema, pero nunca se invocar&#xE1;, ya que la primera ruta finaliza el ciclo de solicitud/respuestas.</p>
+<p>Este ejemplo muestra una subpila de middleware que maneja solicitudes GET a la v&#xED;a de acceso /user/:id.</p>
+<pre><code class="lang-bash">app.get(<span class="hljs-string">&apos;/user/:id&apos;</span>, <span class="hljs-keyword">function</span> (req, res, next) {
+  console.log(<span class="hljs-string">&apos;ID:&apos;</span>, req.params.id);
+  next();
+}, <span class="hljs-keyword">function</span> (req, res, next) {
+  res.send(<span class="hljs-string">&apos;User Info&apos;</span>);
+});
+
+app.get(<span class="hljs-string">&apos;/user/:id&apos;</span>, <span class="hljs-keyword">function</span> (req, res, next) {
+  res.end(req.params.id);
+});
+</code></pre>
+<p>Para omitir el resto de las funciones de middleware de una pila de middleware de direccionador, invoque next(&apos;route&apos;) para pasar el control a la siguiente ruta. NOTA: next(&apos;route&apos;) s&#xF3;lo funcionar&#xE1; en las funciones de middleware que se hayan cargado utilizando las funciones app.METHOD() o router.METHOD().</p>
+<p>Este ejemplo muestra una subpila de middleware que maneja solicitudes GET a la v&#xED;a de acceso /user/:id.</p>
+<pre><code class="lang-bash">app.get(<span class="hljs-string">&apos;/user/:id&apos;</span>, <span class="hljs-keyword">function</span> (req, res, next) {
+  <span class="hljs-keyword">if</span> (req.params.id == <span class="hljs-number">0</span>) next(<span class="hljs-string">&apos;route&apos;</span>);
+  <span class="hljs-keyword">else</span> next(); //
+}, <span class="hljs-keyword">function</span> (req, res, next) {
+  res.render(<span class="hljs-string">&apos;regular&apos;</span>);
+});
+
+app.get(<span class="hljs-string">&apos;/user/:id&apos;</span>, <span class="hljs-keyword">function</span> (req, res, next) {
+  res.render(<span class="hljs-string">&apos;special&apos;</span>);
 });
 </code></pre>
 
@@ -303,10 +316,10 @@
         </div>
 
         
-        <a href="../../index.html" class="navigation navigation-prev " aria-label="Previous page: Introduction"><i class="fa fa-angle-left"></i></a>
+        <a href="../../docs/UsingMDW/index.html" class="navigation navigation-prev " aria-label="Previous page: Middlewares"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../../docs/RoutingG/index.html" class="navigation navigation-next " aria-label="Next page: Guía de Direccionamiento"><i class="fa fa-angle-right"></i></a>
+        <a href="../../docs/UsingMDW/MiddlewareDi.html" class="navigation navigation-next " aria-label="Next page: Middleware de nivel de direccionador"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

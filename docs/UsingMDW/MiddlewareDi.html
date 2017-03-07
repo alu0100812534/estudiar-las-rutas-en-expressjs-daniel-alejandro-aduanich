@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Direccionamiento Básico | Links al deploy</title>
+        <title>Middleware de nivel de direccionador | Links al deploy</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.5.2">
@@ -37,10 +37,10 @@
         
     
     
-    <link rel="next" href="../../docs/RoutingG/index.html" />
+    <link rel="next" href="../../docs/UsingMDW/MiddlewareEr.html" />
     
     
-    <link rel="prev" href="../../index.html" />
+    <link rel="prev" href="../../docs/UsingMDW/MiddlewareAp.html" />
     
 
         
@@ -48,7 +48,7 @@
     <body>
         
         
-    <div class="book" data-level="1" data-chapter-title="Direccionamiento Básico" data-filepath="docs/BasicR/README.md" data-basepath="../.." data-revision="Tue Mar 07 2017 00:48:29 GMT+0000 (WET)">
+    <div class="book" data-level="3.2" data-chapter-title="Middleware de nivel de direccionador" data-filepath="docs/UsingMDW/MiddlewareDi.md" data-basepath="../.." data-revision="Tue Mar 07 2017 00:48:29 GMT+0000 (WET)">
     
 
 <div class="book-summary">
@@ -76,7 +76,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1" data-path="docs/BasicR/index.html">
+        <li class="chapter " data-level="1" data-path="docs/BasicR/index.html">
             
                 
                     <a href="../../docs/BasicR/index.html">
@@ -137,7 +137,7 @@
             
         </li>
     
-        <li class="chapter " data-level="3.2" data-path="docs/UsingMDW/MiddlewareDi.html">
+        <li class="chapter active" data-level="3.2" data-path="docs/UsingMDW/MiddlewareDi.html">
             
                 
                     <a href="../../docs/UsingMDW/MiddlewareDi.html">
@@ -250,48 +250,41 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="direccionamiento-b&#xE1;sico">Direccionamiento B&#xE1;sico</h1>
-<h2 id="introducci&#xF3;n">Introducci&#xF3;n</h2>
-<p>El <strong>direccionamiento</strong> hace referencia a la determinaci&#xF3;n de c&#xF3;mo responde una aplicaci&#xF3;n a una solicitud de cliente en un determinado punto final, que es un URI (o una v&#xED;a de acceso) y un m&#xE9;todo de solicitud HTTP espec&#xED;fico (GET, POST, etc.).</p>
-<p>Cada ruta puede tener una o varias funciones de manejador, que se excluyen cuando se correlaciona la ruta.</p>
-<p>La definici&#xF3;n de ruta tiene la siguiente estructura:</p>
-<pre><code class="lang-bash">    app.METHOD(PATH, HANDLER)
+                        <h2 id="middleware-de-nivel-de-direccionador">Middleware de nivel de direccionador</h2>
+<p>El middleware de nivel de direccionador funciona de la misma manera que el middleware de nivel de aplicaci&#xF3;n, excepto que est&#xE1; enlazado a una instancia de express.Router().</p>
+<pre><code class="lang-bash">var router = express.Router();
 </code></pre>
-<p>Donde:</p>
-<ul>
-<li>app es una instancia de express.</li>
-<li>METHOD es un m&#xE9;todo de solicitud HTTP.</li>
-<li>PATH es una v&#xED;a de acceso en el servidor.</li>
-<li>HANDLER es la funci&#xF3;n que se ejecuta cuando se correlaciona la ruta.</li>
-</ul>
-<h3 id="el-siguiente-ejemplo-ilustra-la-definici&#xF3;n-de-rutas-simples">El siguiente ejemplo ilustra la definici&#xF3;n de rutas simples.</h3>
-<ol>
-<li>Responda con Hello World! en la p&#xE1;gina inicial:</li>
-</ol>
-<pre><code class="lang-bash">app.get(<span class="hljs-string">&apos;/&apos;</span>, <span class="hljs-keyword">function</span> (req, res) {
-  res.send(<span class="hljs-string">&apos;Hello World!&apos;</span>);
+<p>Cargue el middleware de nivel de direccionador utilizando las funciones router.use() y router.METHOD().</p>
+<p>El siguiente c&#xF3;digo de ejemplo replica el sistema de middleware que se ha mostrado anteriormente para el middleware de nivel de aplicaci&#xF3;n, utilizando el middleware de nivel de direccionador:</p>
+<pre><code class="lang-bash">var app = express();
+var router = express.Router();
+
+router.use(<span class="hljs-keyword">function</span> (req, res, next) {
+  console.log(<span class="hljs-string">&apos;Time:&apos;</span>, Date.now());
+  next();
 });
-</code></pre>
-<ol>
-<li>Responda a la solicitud POST en la ruta ra&#xED;z (/), la p&#xE1;gina de inicio de la aplicaci&#xF3;n:</li>
-</ol>
-<pre><code class="lang-bash">app.post(<span class="hljs-string">&apos;/&apos;</span>, <span class="hljs-keyword">function</span> (req, res) {
-  res.send(<span class="hljs-string">&apos;Got a POST request&apos;</span>);
+
+router.use(<span class="hljs-string">&apos;/user/:id&apos;</span>, <span class="hljs-keyword">function</span>(req, res, next) {
+  console.log(<span class="hljs-string">&apos;Request URL:&apos;</span>, req.originalUrl);
+  next();
+}, <span class="hljs-keyword">function</span> (req, res, next) {
+  console.log(<span class="hljs-string">&apos;Request Type:&apos;</span>, req.method);
+  next();
 });
-</code></pre>
-<ol>
-<li>Responda a una solicitud PUT en la ruta /user:</li>
-</ol>
-<pre><code class="lang-bash">app.put(<span class="hljs-string">&apos;/user&apos;</span>, <span class="hljs-keyword">function</span> (req, res) {
-  res.send(<span class="hljs-string">&apos;Got a PUT request at /user&apos;</span>);
+
+router.get(<span class="hljs-string">&apos;/user/:id&apos;</span>, <span class="hljs-keyword">function</span> (req, res, next) {
+  <span class="hljs-keyword">if</span> (req.params.id == <span class="hljs-number">0</span>) next(<span class="hljs-string">&apos;route&apos;</span>);
+  <span class="hljs-keyword">else</span> next(); //
+}, <span class="hljs-keyword">function</span> (req, res, next) {
+  res.render(<span class="hljs-string">&apos;regular&apos;</span>);
 });
-</code></pre>
-<ol>
-<li>Responda a una solicitud DELETE en la ruta /user:</li>
-</ol>
-<pre><code class="lang-bash">app.delete(<span class="hljs-string">&apos;/user&apos;</span>, <span class="hljs-keyword">function</span> (req, res) {
-  res.send(<span class="hljs-string">&apos;Got a DELETE request at /user&apos;</span>);
+
+router.get(<span class="hljs-string">&apos;/user/:id&apos;</span>, <span class="hljs-keyword">function</span> (req, res, next) {
+  console.log(req.params.id);
+  res.render(<span class="hljs-string">&apos;special&apos;</span>);
 });
+
+app.use(<span class="hljs-string">&apos;/&apos;</span>, router);
 </code></pre>
 
                     
@@ -303,10 +296,10 @@
         </div>
 
         
-        <a href="../../index.html" class="navigation navigation-prev " aria-label="Previous page: Introduction"><i class="fa fa-angle-left"></i></a>
+        <a href="../../docs/UsingMDW/MiddlewareAp.html" class="navigation navigation-prev " aria-label="Previous page: Middleware de nivel de aplicación"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../../docs/RoutingG/index.html" class="navigation navigation-next " aria-label="Next page: Guía de Direccionamiento"><i class="fa fa-angle-right"></i></a>
+        <a href="../../docs/UsingMDW/MiddlewareEr.html" class="navigation navigation-next " aria-label="Next page: Middleware de manejo de errores"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

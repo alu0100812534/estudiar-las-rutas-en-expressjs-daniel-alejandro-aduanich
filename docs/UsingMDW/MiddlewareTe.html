@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Direccionamiento Básico | Links al deploy</title>
+        <title>Middleware de terceros | Links al deploy</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.5.2">
@@ -37,10 +37,10 @@
         
     
     
-    <link rel="next" href="../../docs/RoutingG/index.html" />
+    <link rel="next" href="../../docs/RAPID/index.html" />
     
     
-    <link rel="prev" href="../../index.html" />
+    <link rel="prev" href="../../docs/UsingMDW/MiddlewareIn.html" />
     
 
         
@@ -48,7 +48,7 @@
     <body>
         
         
-    <div class="book" data-level="1" data-chapter-title="Direccionamiento Básico" data-filepath="docs/BasicR/README.md" data-basepath="../.." data-revision="Tue Mar 07 2017 00:48:29 GMT+0000 (WET)">
+    <div class="book" data-level="3.5" data-chapter-title="Middleware de terceros" data-filepath="docs/UsingMDW/MiddlewareTe.md" data-basepath="../.." data-revision="Tue Mar 07 2017 00:48:29 GMT+0000 (WET)">
     
 
 <div class="book-summary">
@@ -76,7 +76,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1" data-path="docs/BasicR/index.html">
+        <li class="chapter " data-level="1" data-path="docs/BasicR/index.html">
             
                 
                     <a href="../../docs/BasicR/index.html">
@@ -182,7 +182,7 @@
             
         </li>
     
-        <li class="chapter " data-level="3.5" data-path="docs/UsingMDW/MiddlewareTe.html">
+        <li class="chapter active" data-level="3.5" data-path="docs/UsingMDW/MiddlewareTe.html">
             
                 
                     <a href="../../docs/UsingMDW/MiddlewareTe.html">
@@ -250,48 +250,18 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="direccionamiento-b&#xE1;sico">Direccionamiento B&#xE1;sico</h1>
-<h2 id="introducci&#xF3;n">Introducci&#xF3;n</h2>
-<p>El <strong>direccionamiento</strong> hace referencia a la determinaci&#xF3;n de c&#xF3;mo responde una aplicaci&#xF3;n a una solicitud de cliente en un determinado punto final, que es un URI (o una v&#xED;a de acceso) y un m&#xE9;todo de solicitud HTTP espec&#xED;fico (GET, POST, etc.).</p>
-<p>Cada ruta puede tener una o varias funciones de manejador, que se excluyen cuando se correlaciona la ruta.</p>
-<p>La definici&#xF3;n de ruta tiene la siguiente estructura:</p>
-<pre><code class="lang-bash">    app.METHOD(PATH, HANDLER)
+                        <h2 id="middleware-de-terceros">Middleware de terceros</h2>
+<p>Utilice el middleware de terceros para a&#xF1;adir funcionalidad a las aplicaciones Express.</p>
+<p>Instale el m&#xF3;dulo Node.js para la funcionalidad necesaria y c&#xE1;rguelo en la aplicaci&#xF3;n a nivel de aplicaci&#xF3;n o a nivel de direccionador.</p>
+<p>El siguiente ejemplo ilustra la instalaci&#xF3;n y carga de la funci&#xF3;n de middleware de an&#xE1;lisis de cookies cookie-parser.</p>
+<pre><code class="lang-bash">$ npm install cookie-parser
 </code></pre>
-<p>Donde:</p>
-<ul>
-<li>app es una instancia de express.</li>
-<li>METHOD es un m&#xE9;todo de solicitud HTTP.</li>
-<li>PATH es una v&#xED;a de acceso en el servidor.</li>
-<li>HANDLER es la funci&#xF3;n que se ejecuta cuando se correlaciona la ruta.</li>
-</ul>
-<h3 id="el-siguiente-ejemplo-ilustra-la-definici&#xF3;n-de-rutas-simples">El siguiente ejemplo ilustra la definici&#xF3;n de rutas simples.</h3>
-<ol>
-<li>Responda con Hello World! en la p&#xE1;gina inicial:</li>
-</ol>
-<pre><code class="lang-bash">app.get(<span class="hljs-string">&apos;/&apos;</span>, <span class="hljs-keyword">function</span> (req, res) {
-  res.send(<span class="hljs-string">&apos;Hello World!&apos;</span>);
-});
-</code></pre>
-<ol>
-<li>Responda a la solicitud POST en la ruta ra&#xED;z (/), la p&#xE1;gina de inicio de la aplicaci&#xF3;n:</li>
-</ol>
-<pre><code class="lang-bash">app.post(<span class="hljs-string">&apos;/&apos;</span>, <span class="hljs-keyword">function</span> (req, res) {
-  res.send(<span class="hljs-string">&apos;Got a POST request&apos;</span>);
-});
-</code></pre>
-<ol>
-<li>Responda a una solicitud PUT en la ruta /user:</li>
-</ol>
-<pre><code class="lang-bash">app.put(<span class="hljs-string">&apos;/user&apos;</span>, <span class="hljs-keyword">function</span> (req, res) {
-  res.send(<span class="hljs-string">&apos;Got a PUT request at /user&apos;</span>);
-});
-</code></pre>
-<ol>
-<li>Responda a una solicitud DELETE en la ruta /user:</li>
-</ol>
-<pre><code class="lang-bash">app.delete(<span class="hljs-string">&apos;/user&apos;</span>, <span class="hljs-keyword">function</span> (req, res) {
-  res.send(<span class="hljs-string">&apos;Got a DELETE request at /user&apos;</span>);
-});
+<pre><code class="lang-bash">var express = require(<span class="hljs-string">&apos;express&apos;</span>);
+var app = express();
+var cookieParser = require(<span class="hljs-string">&apos;cookie-parser&apos;</span>);
+
+// load the cookie-parsing middleware
+app.use(cookieParser());
 </code></pre>
 
                     
@@ -303,10 +273,10 @@
         </div>
 
         
-        <a href="../../index.html" class="navigation navigation-prev " aria-label="Previous page: Introduction"><i class="fa fa-angle-left"></i></a>
+        <a href="../../docs/UsingMDW/MiddlewareIn.html" class="navigation navigation-prev " aria-label="Previous page: Middleware incorporado"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../../docs/RoutingG/index.html" class="navigation navigation-next " aria-label="Next page: Guía de Direccionamiento"><i class="fa fa-angle-right"></i></a>
+        <a href="../../docs/RAPID/index.html" class="navigation navigation-next " aria-label="Next page: Documentación API Router (Express)"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

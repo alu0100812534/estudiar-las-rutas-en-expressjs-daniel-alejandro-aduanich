@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Direccionamiento Básico | Links al deploy</title>
+        <title>Middleware incorporado | Links al deploy</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.5.2">
@@ -37,10 +37,10 @@
         
     
     
-    <link rel="next" href="../../docs/RoutingG/index.html" />
+    <link rel="next" href="../../docs/UsingMDW/MiddlewareTe.html" />
     
     
-    <link rel="prev" href="../../index.html" />
+    <link rel="prev" href="../../docs/UsingMDW/MiddlewareEr.html" />
     
 
         
@@ -48,7 +48,7 @@
     <body>
         
         
-    <div class="book" data-level="1" data-chapter-title="Direccionamiento Básico" data-filepath="docs/BasicR/README.md" data-basepath="../.." data-revision="Tue Mar 07 2017 00:48:29 GMT+0000 (WET)">
+    <div class="book" data-level="3.4" data-chapter-title="Middleware incorporado" data-filepath="docs/UsingMDW/MiddlewareIn.md" data-basepath="../.." data-revision="Tue Mar 07 2017 00:48:29 GMT+0000 (WET)">
     
 
 <div class="book-summary">
@@ -76,7 +76,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1" data-path="docs/BasicR/index.html">
+        <li class="chapter " data-level="1" data-path="docs/BasicR/index.html">
             
                 
                     <a href="../../docs/BasicR/index.html">
@@ -167,7 +167,7 @@
             
         </li>
     
-        <li class="chapter " data-level="3.4" data-path="docs/UsingMDW/MiddlewareIn.html">
+        <li class="chapter active" data-level="3.4" data-path="docs/UsingMDW/MiddlewareIn.html">
             
                 
                     <a href="../../docs/UsingMDW/MiddlewareIn.html">
@@ -250,48 +250,90 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="direccionamiento-b&#xE1;sico">Direccionamiento B&#xE1;sico</h1>
-<h2 id="introducci&#xF3;n">Introducci&#xF3;n</h2>
-<p>El <strong>direccionamiento</strong> hace referencia a la determinaci&#xF3;n de c&#xF3;mo responde una aplicaci&#xF3;n a una solicitud de cliente en un determinado punto final, que es un URI (o una v&#xED;a de acceso) y un m&#xE9;todo de solicitud HTTP espec&#xED;fico (GET, POST, etc.).</p>
-<p>Cada ruta puede tener una o varias funciones de manejador, que se excluyen cuando se correlaciona la ruta.</p>
-<p>La definici&#xF3;n de ruta tiene la siguiente estructura:</p>
-<pre><code class="lang-bash">    app.METHOD(PATH, HANDLER)
+                        <h2 id="middleware-incorporado">Middleware incorporado</h2>
+<p>Desde la versi&#xF3;n 4.x, Express ya no depende de Connect. Excepto express.static, todas las funciones de middleware que se inclu&#xED;an previamente con Express est&#xE1;n ahora en m&#xF3;dulos diferentes. Consulte la lista de funciones de middleware.</p>
+<p>express.static(root, [options])</p>
+<p>La &#xFA;nica funci&#xF3;n de middleware incorporado en Express es express.static. Esta funci&#xF3;n se basa en serve-static y es responsable del servicio de activos est&#xE1;ticos de una aplicaci&#xF3;n Express.</p>
+<p>El argumento root especifica el directorio ra&#xED;z desde el que se realiza el servicio de activos est&#xE1;ticos.</p>
+<p>El objeto options opcional puede tener las siguientes propiedades:</p>
+<table>
+<thead>
+<tr>
+<th>Propiedad</th>
+<th>Descripci&#xF3;n</th>
+<th>Tipo</th>
+<th>Valor predeterminado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dotfiles</td>
+<td>Opci&#xF3;n para el servicio de dotfiles. Los valores posibles son &#x201C;allow&#x201D;, &#x201C;deny&#x201D; e &#x201C;ignore&#x201D;</td>
+<td>Serie</td>
+<td>&#x201C;ignore&#x201D;</td>
+</tr>
+<tr>
+<td>etag</td>
+<td>Habilitar o inhabilitar la generaci&#xF3;n de etag</td>
+<td>Booleano</td>
+<td>true</td>
+</tr>
+<tr>
+<td>extensions</td>
+<td>Establece las reservas de extensiones de archivos.</td>
+<td>Matriz</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>index</td>
+<td>Env&#xED;a el archivo de &#xED;ndices de directorios. Establ&#xE9;zcalo en false para inhabilitar la indexaci&#xF3;n de directorios.</td>
+<td>Mixto</td>
+<td>&#x201C;index.html&#x201D;</td>
+</tr>
+<tr>
+<td>lastModified</td>
+<td>Establezca la cabecera Last-Modified en la &#xFA;ltima fecha de modificaci&#xF3;n del archivo en el sistema operativo. Los valores posibles son true o false.</td>
+<td>Booleano</td>
+<td>true</td>
+</tr>
+<tr>
+<td>maxAge</td>
+<td>Establezca la propiedad max-age de la cabecera Cache-Control en milisegundos o una serie en formato ms</td>
+<td>N&#xFA;mero</td>
+<td>0</td>
+</tr>
+<tr>
+<td>redirect</td>
+<td>Redireccionar a la &#x201C;/&#x201D; final cuando el nombre de v&#xED;a de acceso es un directorio.</td>
+<td>Booleano</td>
+<td>true</td>
+</tr>
+<tr>
+<td>setHeaders</td>
+<td>Funci&#xF3;n para establecer las cabeceras HTTP que se sirven con el archivo.</td>
+<td>Funci&#xF3;n</td>
+</tr>
+</tbody>
+</table>
+<p>A continuaci&#xF3;n, se muestra un ejemplo de uso de la funci&#xF3;n de middleware express.static con un objeto de opciones elaboradas:</p>
+<pre><code class="lang-bash">var options = {
+  dotfiles: <span class="hljs-string">&apos;ignore&apos;</span>,
+  etag: <span class="hljs-literal">false</span>,
+  extensions: [<span class="hljs-string">&apos;htm&apos;</span>, <span class="hljs-string">&apos;html&apos;</span>],
+  index: <span class="hljs-literal">false</span>,
+  maxAge: <span class="hljs-string">&apos;1d&apos;</span>,
+  redirect: <span class="hljs-literal">false</span>,
+  <span class="hljs-built_in">set</span>Headers: <span class="hljs-keyword">function</span> (res, path, <span class="hljs-built_in">stat</span>) {
+    res.set(<span class="hljs-string">&apos;x-timestamp&apos;</span>, Date.now());
+  }
+}
+
+app.use(express.static(<span class="hljs-string">&apos;public&apos;</span>, options));
 </code></pre>
-<p>Donde:</p>
-<ul>
-<li>app es una instancia de express.</li>
-<li>METHOD es un m&#xE9;todo de solicitud HTTP.</li>
-<li>PATH es una v&#xED;a de acceso en el servidor.</li>
-<li>HANDLER es la funci&#xF3;n que se ejecuta cuando se correlaciona la ruta.</li>
-</ul>
-<h3 id="el-siguiente-ejemplo-ilustra-la-definici&#xF3;n-de-rutas-simples">El siguiente ejemplo ilustra la definici&#xF3;n de rutas simples.</h3>
-<ol>
-<li>Responda con Hello World! en la p&#xE1;gina inicial:</li>
-</ol>
-<pre><code class="lang-bash">app.get(<span class="hljs-string">&apos;/&apos;</span>, <span class="hljs-keyword">function</span> (req, res) {
-  res.send(<span class="hljs-string">&apos;Hello World!&apos;</span>);
-});
-</code></pre>
-<ol>
-<li>Responda a la solicitud POST en la ruta ra&#xED;z (/), la p&#xE1;gina de inicio de la aplicaci&#xF3;n:</li>
-</ol>
-<pre><code class="lang-bash">app.post(<span class="hljs-string">&apos;/&apos;</span>, <span class="hljs-keyword">function</span> (req, res) {
-  res.send(<span class="hljs-string">&apos;Got a POST request&apos;</span>);
-});
-</code></pre>
-<ol>
-<li>Responda a una solicitud PUT en la ruta /user:</li>
-</ol>
-<pre><code class="lang-bash">app.put(<span class="hljs-string">&apos;/user&apos;</span>, <span class="hljs-keyword">function</span> (req, res) {
-  res.send(<span class="hljs-string">&apos;Got a PUT request at /user&apos;</span>);
-});
-</code></pre>
-<ol>
-<li>Responda a una solicitud DELETE en la ruta /user:</li>
-</ol>
-<pre><code class="lang-bash">app.delete(<span class="hljs-string">&apos;/user&apos;</span>, <span class="hljs-keyword">function</span> (req, res) {
-  res.send(<span class="hljs-string">&apos;Got a DELETE request at /user&apos;</span>);
-});
+<p>Puede tener m&#xE1;s de un directorio est&#xE1;tico para cada aplicaci&#xF3;n:</p>
+<pre><code class="lang-bash">app.use(express.static(<span class="hljs-string">&apos;public&apos;</span>));
+app.use(express.static(<span class="hljs-string">&apos;uploads&apos;</span>));
+app.use(express.static(<span class="hljs-string">&apos;files&apos;</span>));
 </code></pre>
 
                     
@@ -303,10 +345,10 @@
         </div>
 
         
-        <a href="../../index.html" class="navigation navigation-prev " aria-label="Previous page: Introduction"><i class="fa fa-angle-left"></i></a>
+        <a href="../../docs/UsingMDW/MiddlewareEr.html" class="navigation navigation-prev " aria-label="Previous page: Middleware de manejo de errores"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../../docs/RoutingG/index.html" class="navigation navigation-next " aria-label="Next page: Guía de Direccionamiento"><i class="fa fa-angle-right"></i></a>
+        <a href="../../docs/UsingMDW/MiddlewareTe.html" class="navigation navigation-next " aria-label="Next page: Middleware de terceros"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

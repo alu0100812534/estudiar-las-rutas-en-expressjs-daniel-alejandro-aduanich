@@ -1,0 +1,7 @@
+node_modules/
+gh-pages/
+wiki/
+txt/
+_book/
+book.json
+/scripts
