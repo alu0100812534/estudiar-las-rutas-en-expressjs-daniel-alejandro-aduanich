@@ -1,9 +1,8 @@
 # Links al deploy
 
-* [versión gh-pages]()
-* [versión wiki]()
-* [versión iass]()
-* [versión heroku]()
+* [versión gh-pages](https://ull-esit-pl-1617.github.io/estudiar-las-rutas-en-expressjs-daniel-alejandro-aduanich/)
+* [versión iass](http://10.6.128.40/)
+* [versión heroku](https://rutas-daniel2-alex-adu.herokuapp.com/)
 
 # Links a la especificación de la práctica
 
